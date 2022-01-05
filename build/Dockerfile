@@ -33,9 +33,13 @@ LABEL name="Percona XtraDB Cluster Operator" \
 # Check https://access.redhat.com/errata/RHBA-2020:4536
 # and https://bugzilla.redhat.com/show_bug.cgi?id=1832743
 # for sources of enabling FIPS-140-2 support
+#
+# platform-python-pip is removed due to CVE-2019-20916, VULNDB-229216
+# python3-pip-wheel is required by platform-python
 RUN set -ex; \
     microdnf update; \
     microdnf -y install crypto-policies-scripts; \
+    microdnf -y remove platform-python-pip; \
     microdnf clean all; \
     fips-mode-setup --enable
 
