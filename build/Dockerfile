@@ -37,10 +37,11 @@ LABEL name="Percona XtraDB Cluster Operator" \
 # platform-python-pip is removed due to CVE-2019-20916, VULNDB-229216
 # python3-pip-wheel is required by platform-python
 RUN set -ex; \
-    microdnf update; \
+    microdnf -y update; \
     microdnf -y install crypto-policies-scripts; \
     microdnf -y remove platform-python-pip; \
     microdnf clean all; \
+    rm -rf /var/cache/dnf /var/cache/yum; \
     fips-mode-setup --enable
 
 COPY LICENSE /licenses/
